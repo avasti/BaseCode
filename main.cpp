@@ -4,9 +4,6 @@
 
 	SDL_Window* g_pWindow = 0;
 	SDL_Renderer* g_pRenderer = 0;
-	int r = 0;
-	int g = 0;
-	int b = 0;
 
 	int main(int argc, char* args[])
 	{

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "TextureManager.h"
 
 //Nom de la clase::Constructor a implementar
 Game::Game() {
@@ -6,18 +7,14 @@ Game::Game() {
 g_pWindow = 0;
 g_pRenderer = 0;
 Running = true;
-r = 0;
-g = 0;
-b = 0;
-
+Tancar = true;
 };
 
 Game::~Game()
 {
 };
 
-bool Game::init(const char* title, int xpos, int
-	ypos, int width, int height, bool fullscreen)
+bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 	// initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
@@ -32,6 +29,10 @@ bool Game::init(const char* title, int xpos, int
 		if (g_pWindow != 0)
 		{
 			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
+
+			if (!TextureManager::Instance()->load("sonic.bmp", "A", g_pRenderer)) {
+				return false;
+			}
 		}
 	}
 	else
@@ -42,6 +43,12 @@ bool Game::init(const char* title, int xpos, int
 
 void Game::EventHandler()
 {
+	if (SDL_PollEvent(&closeWindows) == 1) {
+		if ((closeWindows.type == SDL_QUIT || closeWindows.key.keysym.sym == SDLK_ESCAPE)) {
+			Tancar = false;
+		}
+	}
+
 };
 
 void Game::Clear()
@@ -55,39 +62,21 @@ void Game::Clear()
 bool Game::IsRunning()
 {
 
+	return Tancar;
 	return Running;
 };
 
 void Game::Render() 
 {
-
-	// clear the window to black
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(g_pRenderer);
-
-	// show the window
 	SDL_RenderPresent(g_pRenderer);
+	spriteNum = (int)((SDL_GetTicks() / 100) % 6);
+	TextureManager::Instance()->drawFrame("A", 300, 200, 104, 151, 0, spriteNum, g_pRenderer, SDL_FLIP_NONE);
 };
 
 void Game::Update()
 {
 
-	while (true) {
-		if (r < 255) {
-			r = r + 1;
-		}
-		else if (g < 255) {
-			g = g + 1;
-		}
-		else if (b < 255) {
-			b = b + 1;
-		}
-
-		SDL_SetRenderDrawColor(g_pRenderer, r, g, b, 255);
-
-		SDL_Delay(50);
-
-		SDL_RenderClear(g_pRenderer);
-
-		SDL_RenderPresent(g_pRenderer);
-	}
+	SDL_RenderPresent(g_pRenderer);
 };
