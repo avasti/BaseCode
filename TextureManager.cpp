@@ -1,45 +1,56 @@
 #include "TextureManager.h"
 
-TextureManager::TextureManager() {};
 TextureManager* TextureManager::s_pInstance = 0;
+TextureManager::TextureManager() {};
 
-bool TextureManager::Load(const char* fileName, const char* id, SDL_Renderer* pRenderer) {
+bool TextureManager::load(const char* fileName, const char* id, SDL_Renderer* pRenderer) {
 	SDL_surface = SDL_LoadBMP(fileName);
 	SDL_SetColorKey(SDL_surface, 1, SDL_MapRGB(SDL_surface->format, 255, 0, 255));
 	SDL_texture = SDL_CreateTextureFromSurface(pRenderer, SDL_surface);
-	m_textureMap[*id] = SDL_texture;
+	MAP_textureMap[*id] = SDL_texture;
 	return true;
 };
 
-void TextureManager::Draw(const char* id, int x, int y, int width, int height, SDL_Renderer* pRender, SDL_RendererFlip flip) {
-	TextureManager::SrcR.w = m_textureSizes[*id][0];
-	TextureManager::SrcR.h = m_textureSizes[*id][1];
-	TextureManager::DestR.x = x;
-	TextureManager::DestR.y = y;
-	TextureManager::DestR.w = width;
-	TextureManager::DestR.h = height;
-	TextureManager::SrcR.w = width;
-	TextureManager::SrcR.h = height;
-	SDL_RenderCopyEx(pRender, m_textureMap[*id], &SrcR, &DestR, 0, 0, flip);
+void TextureManager::draw(const char* id, int x, int y, int width, int height, int currentFrame, SDL_Renderer* pRender, SDL_RendererFlip flip) {
+	TextureManager::srcrect.w = MAP_textureSizes[*id][0];
+	TextureManager::srcrect.h = MAP_textureSizes[*id][1];
+	TextureManager::srcrect.w = width;
+	TextureManager::srcrect.h = height;
+	TextureManager::dstrect.x = x;
+	TextureManager::dstrect.y = y;
+	TextureManager::dstrect.w = width;
+	TextureManager::dstrect.h = height;
+	SDL_RenderCopyEx(pRender, MAP_textureMap[*id], &srcrect, &dstrect, currentFrame, NULL, flip);
 };
 
-void TextureManager::DrawFrame(const char* id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRender, SDL_RendererFlip flip) {
-	TextureManager::SrcR.x = currentFrame*m_textureSizes[*id][0];
-	TextureManager::SrcR.y = currentRow*m_textureSizes[*id][1];
-	TextureManager::SrcR.w = m_textureSizes[*id][0];
-	TextureManager::SrcR.h = m_textureSizes[*id][1];
-	TextureManager::DestR.x = x;
-	TextureManager::DestR.y = y;
-	TextureManager::DestR.w = width;
-	TextureManager::DestR.h = height;
-	SDL_RenderCopyEx(pRender, m_textureMap[*id], &SrcR, &DestR, 0, 0, flip);//Los tres últimos parametros son para girar o voltear el sprite, no los usamos.
+void TextureManager::drawFrame(const char* id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRender, SDL_RendererFlip flip) {
+	TextureManager::srcrect.x = currentFrame*MAP_textureSizes[*id][0];
+	TextureManager::srcrect.y = currentRow*MAP_textureSizes[*id][1];
+	TextureManager::srcrect.w = MAP_textureSizes[*id][0];
+	TextureManager::srcrect.h = MAP_textureSizes[*id][1];
+	TextureManager::dstrect.x = x;
+	TextureManager::dstrect.y = y;
+	TextureManager::dstrect.w = width;
+	TextureManager::dstrect.h = height;
+	SDL_RenderCopyEx(pRender, MAP_textureMap[*id], &srcrect, &dstrect, 0, 0, flip);
 };
 
-TextureManager::~TextureManager() {
-
-};
-
-void TextureManager::setFrames(const char* id, int w, int h) {
-	m_textureSizes[*id][1] = h;
-	m_textureSizes[*id][0] = w;
+void TextureManager::setSizeFrames(const char* id, int w, int h) {
+	MAP_textureSizes[*id][0] = w;
+	MAP_textureSizes[*id][1] = h;
 }
+
+TextureManager::~TextureManager(){
+	SDL_surface = NULL;
+	SDL_texture = NULL;
+	MAP_textureMap.clear();
+};
+
+void TextureManager::clean(const char* id) {
+	SDL_surface = NULL;
+	SDL_texture = NULL;
+	MAP_textureMap.erase(*id);
+};
+
+
+

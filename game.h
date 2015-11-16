@@ -6,6 +6,11 @@
 #include "Player.h"
 #include "StaticObjects.h"
 #include "Enemy.h"
+#include "InputHandler.h"
+#include "TextureManager.h"
+#include "GameStateMachine.h"
+#include "PlayState.h"
+#include "MenuState.h"
 
 class Game
 {
@@ -14,16 +19,16 @@ private:
 	SDL_Window* g_pWindow;
 	SDL_Renderer* g_pRenderer;
 	SDL_Event event;
+	InputHandler* TheInputHandler;
+	TextureManager* TheTextureManager;
+	PlayState* PlayStates;
+	MenuState* MenuStates;
+	GameStateMachine* GameMachine;
 	bool Tancar;
-	int SWidth;
-	int SHeigth;
+	int m_screenWidth;
+	int m_screenHeight;
 	static Game* s_pInstance;
-	StaticObjects* objeto;
-	LoaderParams* LoadParam;
-	Player* jugador;
-	LoaderParams* ParamOb;
-	LoaderParams* ParamEv;
-	Enemy* enemigo;
+	
 public:
 	static Game* Instance()
 	{
@@ -34,7 +39,7 @@ public:
 		return s_pInstance;
 	}
 	~Game();
-
+	
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 	void render();
 	void update();
@@ -44,8 +49,10 @@ public:
 	SDL_Renderer* getRender();
 	int getTicks();
 	std::vector<GameObject*> m_gobjects;
-	int getWidth();
-	int getHeight();
+	int getScreenWidth();
+	int getScreenHeight();
+	void setflag(bool b);
+	GameStateMachine* getGameStateMachine();
 };
 
 #endif

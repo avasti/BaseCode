@@ -1,24 +1,40 @@
-﻿Build started 03/11/2015 2:21:33.
+﻿Build started 16/11/2015 23:54:29.
      1>Project "C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\1helloworld.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Game.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Ilibs/SDL/include /Ilibs/SDL_image/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Player.cpp StaticObjects.cpp game.cpp main.cpp
-         game.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Ilibs/SDL/include /Ilibs/SDL_image/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Game.cpp GameStateMachine.cpp InputHandler.cpp MenuButton.cpp PlayState.cpp Player.cpp StaticObjects.cpp TextureManager.cpp Vector2D.cpp main.cpp
+         main.cpp
+         PlayState.cpp
+     1>c:\users\frede\desktop\basecode-master\basecode-master\basecode-master\playstate.cpp(48): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>c:\users\frede\desktop\basecode-master\basecode-master\basecode-master\playstate.cpp(49): warning C4305: 'argument': truncation from 'double' to 'float'
          Generating Code...
          Skipping... (no relevant changes detected)
-         main.cpp
+         Vector2D.cpp
+         TextureManager.cpp
          StaticObjects.cpp
          Player.cpp
+         MenuButton.cpp
+         InputHandler.cpp
+         GameStateMachine.cpp
+         Game.cpp
          Enemy.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\1-helloworld.exe" /INCREMENTAL /NOLOGO /LIBPATH:libs/SDL/lib /LIBPATH:libs/SDL_image/lib SDL2.lib SDL2main.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\1-helloworld.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\1-helloworld.lib" /MACHINE:X86 Debug\Enemy.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\videojuegos.exe" /INCREMENTAL /NOLOGO /LIBPATH:libs/SDL/lib /LIBPATH:libs/SDL_image/lib SDL2.lib SDL2main.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\videojuegos.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\videojuegos.lib" /MACHINE:X86 Debug\Enemy.obj
+         Debug\Game.obj
+         Debug\GameStateMachine.obj
+         Debug\InputHandler.obj
          Debug\main.obj
-         Debug\game.obj
+         Debug\MenuButton.obj
+         Debug\MenuState.obj
+         Debug\PauseState.obj
          Debug\Player.obj
+         Debug\PlayState.obj
          Debug\StaticObjects.obj
          Debug\TextureManager.obj
-         1helloworld.vcxproj -> C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\1-helloworld.exe
+         Debug\Vector2D.obj
+         1helloworld.vcxproj -> C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\Debug\videojuegos.exe
      1>Done Building Project "C:\Users\Frede\Desktop\BaseCode-master\BaseCode-master\BaseCode-master\1helloworld.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.64
+Time Elapsed 00:00:01.71

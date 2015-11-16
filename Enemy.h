@@ -11,7 +11,7 @@ public:
 	void draw();
 	void load(const LoaderParams* pParams);
 	void update();
-	void clean();
+	void update(int width);
 };
 
 #endif ENEMY_H
