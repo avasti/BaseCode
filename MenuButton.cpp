@@ -1,20 +1,22 @@
 #include "MenuButton.h"
 #include "Game.h"
+#include "TextureManager.h"
 
-MenuButton::MenuButton(const LoaderParams* pParams, void(*callback)()) : m_callback(callback) {
-	MenuButton::Params = pParams;
-
+MenuButton::MenuButton(){};
+MenuButton::~MenuButton(){};
+void MenuButton::load(const LoaderParams* pParam) {
 	m_bReleased = false;
-	if (TextureManager::Instance()->load(pParams->getTextureID(), pParams->getTextureID(), Game::Instance()->getRender())) {
-		TextureManager::Instance()->setSizeFrames(pParams->getTextureID(), pParams->getWidth(), pParams->getHeight());
-	}
+	m_callbackID = pParam->getCallbackID();
+	m_width = pParam->getWidth();
+	m_height = pParam->getHeight();
+	m_position.setX(pParam->getX());
+	m_position.setY(pParam->getY());
+	m_textureID = pParam->getTextureID();
+	m_spriteNum = pParam->getNum();
 };
 
-MenuButton::~MenuButton(){};
-void MenuButton::load(const LoaderParams* pParam) {};
-
 void MenuButton::draw() {
-	TextureManager::Instance()->drawFrame(Params->getTextureID(), Params->getX(), Params->getY(), Params->getWidth(), Params->getHeight(), 0, m_currentFrame, Game::Instance()->getRender(), SDL_FLIP_NONE);
+	TextureManager::Instance()->drawFrame(m_textureID, m_position.getX(), m_position.getY(), m_width, m_height, 0, m_currentFrame, Game::Instance()->getRender(), SDL_FLIP_NONE);
 };
 
 void MenuButton::update() {
@@ -23,10 +25,10 @@ void MenuButton::update() {
 	pMousePos = InputHandler::Instance()->getMousePosition();
 	printf("x: %f - y: %f\n", pMousePos->getX(), pMousePos->getY());
 
-	if (pMousePos->getX() < (Params->getX() + Params->getWidth())
-		&& pMousePos->getX() > Params->getX()
-		&& pMousePos->getY() < (Params->getY() + Params->getHeight())
-		&& pMousePos->getY() > Params->getY())
+	if (pMousePos->getX() < (m_position.getX() + m_width)
+		&& pMousePos->getX() > m_position.getX()
+		&& pMousePos->getY() < (m_position.getY() + m_height)
+		&& pMousePos->getY() > m_position.getY())
 	{
 		if (InputHandler::Instance()->getMouseButtonState(0)) {
 			m_currentFrame = CLICKED;
@@ -48,3 +50,4 @@ void MenuButton::update() {
 void MenuButton::clean() {
 	InputHandler::Instance()->clean();
 };
+

@@ -4,7 +4,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player : public GameObject
+class Sonic : public GameObject
 {
 private:
 	void stopX(int);
@@ -12,8 +12,8 @@ private:
 	Vector2D m_lastStop;
 	SDL_RendererFlip m_lastTimeOrientation;
 public:
-	Player();
-	~Player();
+	Sonic();
+	~Sonic();
 	void draw();
 	void load(const LoaderParams* pParams);
 	void update();
@@ -24,6 +24,7 @@ public:
 	void decrementAccelerationX();
 	void impulseRight();
 	void impulseLeft();
+	static GameObject * Create() { return new Sonic(); }
 };
 
 #endif PLAYER_H

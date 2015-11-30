@@ -8,8 +8,8 @@
 class GameStateMachine
 {
 public:
-	void pushState(GameState* pState);
-	void changeState(GameState* pState);
+	void pushState(GameState* PlayState);
+	void changeState(GameState* PlayState);
 	void popState();
 	void update();
 	void render();

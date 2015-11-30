@@ -6,6 +6,8 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 
+typedef void (*Callback)();
+
 class MenuState : public GameState
 {
 public:
@@ -14,15 +16,14 @@ public:
 	bool onEnter();
 	bool onExit();
 	std::string getStateID() const;
+	void setCallbacks(const std::vector<Callback>& callbacks);
 private:
 	static const std::string s_menuID;
 	std::vector<GameObject*> m_gameObjects;
 	static void s_menuToPlay();
 	static void s_exitFromMenu();
-	MenuButton* mb;
-	MenuButton* mb2;
-	std::vector<int> theMiddle(int width, int height);
 	std::vector<int> m_position;
-	StaticObjects* so;
+	std::vector<const char*> m_textureIDList;
+	std::vector< Callback > m_callbacks;
 };
 #endif MENUSTATE_H

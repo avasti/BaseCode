@@ -18,6 +18,5 @@ public:
 	virtual bool onEnter() = 0;
 	virtual bool onExit() = 0;
 	virtual std::string getStateID() const = 0;
-	virtual std::vector<int> theMiddle(int width, int height) = 0;
 };
 #endif GAMESTATE_H

@@ -6,11 +6,10 @@
 #include "Player.h"
 #include "StaticObjects.h"
 #include "Enemy.h"
-#include "InputHandler.h"
-#include "TextureManager.h"
 #include "GameStateMachine.h"
 #include "PlayState.h"
 #include "MenuState.h"
+#include "GameObjectFactory.h"
 
 class Game
 {
@@ -19,24 +18,22 @@ private:
 	SDL_Window* g_pWindow;
 	SDL_Renderer* g_pRenderer;
 	SDL_Event event;
-	InputHandler* TheInputHandler;
-	TextureManager* TheTextureManager;
-	PlayState* PlayStates;
-	MenuState* MenuStates;
-	GameStateMachine* GameMachine;
 	bool Tancar;
-	int m_screenWidth;
-	int m_screenHeight;
-	static Game* s_pInstance;
-	
+	int SWidth;
+	int SHeight;
+	static Game* static_pInstance;
+	GameStateMachine* GameMachine;
+	GameState* PlayState;
+	GameState* MenuStates;
+	GameObjectFactory* TheGameObjectFactory;
 public:
 	static Game* Instance()
 	{
-		if (s_pInstance == 0)
+		if (static_pInstance == 0)
 		{
-			s_pInstance = new Game();
+			static_pInstance = new Game();
 		}
-		return s_pInstance;
+		return static_pInstance;
 	}
 	~Game();
 	

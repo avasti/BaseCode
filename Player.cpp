@@ -2,11 +2,10 @@
 #include "Player.h"
 #include "TextureManager.h"
 
+Sonic::Sonic() {};
+Sonic::~Sonic() {};
 
-Player::Player() {};
-Player::~Player() {};
-
-void Player::draw()
+void Sonic::draw()
 {
 	if (m_velocity.getX() < 0) {
 		TextureManager::Instance()->drawFrame(m_textureID, m_position.getX(), m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, Game::Instance()->getRender(), SDL_FLIP_HORIZONTAL);
@@ -21,7 +20,7 @@ void Player::draw()
 	}
 }
 
-void Player::load(const LoaderParams* pParams)
+void Sonic::load(const LoaderParams* pParams)
 {
 	m_width = pParams->getWidth();
 	m_height = pParams->getHeight();
@@ -42,7 +41,7 @@ void Player::load(const LoaderParams* pParams)
 	m_friction = m_velocity*m_frictionCoeficient;
 };
 
-void Player::update() {
+void Sonic::update() {
 	int pixelsToChangeFrame = 12;
 	Vector2D v0 = m_velocity;
 	if (m_velocity.getX() > 0) {
@@ -70,26 +69,43 @@ void Player::update() {
 	}
 	m_position += m_velocity + m_acceleration * 1 / 2;
 	m_currentFrame = (abs((int) (m_position - m_lastStop).length()) / pixelsToChangeFrame) % m_spriteNum;
-}
 
-void Player::update(int width, int height)
-{
+	InputHandler::Instance()->update();
+
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+		incrementAccelerationX();
+	}
+	else if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+		decrementAccelerationX();
+	}
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+		decrementAccelerationY();
+	}
+	else if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+		incrementAccelerationY();
+	}
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_A)) {
+		impulseLeft();
+	}
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_S)) {
+		impulseRight();
+	}
+
 	if (m_position.getX() < 0) {
 		stopX(0);
 	}
-	if (m_position.getX() > (width - m_width)) {
-		stopX(width - m_width);
+	if (m_position.getX() > (Game::Instance()->getScreenWidth() - m_width)) {
+		stopX(Game::Instance()->getScreenWidth() - m_width);
 	}
 	if (m_position.getY() < 0) {
 		stopY(0);
 	}
-	if (m_position.getY() > (height - m_height)) {
-		stopY(height - m_height);
+	if (m_position.getY() > (Game::Instance()->getScreenHeight() - m_height)) {
+		stopY(Game::Instance()->getScreenHeight() - m_height);
 	}
 }
 
-
-void Player::stopX(int positionX)
+void Sonic::stopX(int positionX)
 {
 	m_lastStop.setX(positionX);
 	m_position.setX(positionX);
@@ -98,7 +114,7 @@ void Player::stopX(int positionX)
 	m_friction.setX(0);
 }
 
-void Player::stopY(int positionY)
+void Sonic::stopY(int positionY)
 {
 	m_lastStop.setY(positionY);
 	m_position.setY(positionY);
@@ -107,28 +123,28 @@ void Player::stopY(int positionY)
 	m_friction.setY(0);
 }
 
-void Player::incrementAccelerationX()
+void Sonic::incrementAccelerationX()
 {
 	m_acceleration.setX(m_acceleration.getX() + 0.3);
 }
-void Player::decrementAccelerationX()
+void Sonic::decrementAccelerationX()
 {
 	m_acceleration.setX(m_acceleration.getX() - 0.3);
 }
-void Player::incrementAccelerationY()
+void Sonic::incrementAccelerationY()
 {
 	m_acceleration.setY(m_acceleration.getY() + 0.3);
 }
-void Player::decrementAccelerationY()
+void Sonic::decrementAccelerationY()
 {
 	m_acceleration.setY(m_acceleration.getY() - 0.3);
 }
-void Player::impulseRight()
+void Sonic::impulseRight()
 {
 	m_acceleration.setX(0);
 	m_velocity.setX(m_maxVelocity);
 }
-void Player::impulseLeft()
+void Sonic::impulseLeft()
 {
 	m_acceleration.setX(0);
 	m_velocity.setX(-m_maxVelocity);

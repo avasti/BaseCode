@@ -13,6 +13,7 @@ public:
 	void update();
 	void clean();
 	void drawRotation(int angle);
+	static GameObject * Create() { return new StaticObjects(); }
 };
 
 #endif STATICOBJECTS_H

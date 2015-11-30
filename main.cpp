@@ -6,7 +6,7 @@ const int FIXED_HEIGHT = 768;
 
 int main(int argc, char* args[])
 {
-	if (Game::Instance()->init("Sonic Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, FIXED_WIDTH, FIXED_HEIGHT, false)) {
+	if (Game::Instance()->init("GAME - SONIC", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, FIXED_WIDTH, FIXED_HEIGHT, false)) {
 		while (Game::Instance()->isRunning()) {
 			long frameStart = SDL_GetTicks();
 			Game::Instance()->render();

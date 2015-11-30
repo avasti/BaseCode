@@ -1,7 +1,6 @@
 #include "InputHandler.h"
 
-
-InputHandler* InputHandler::s_pInstance = 0;
+InputHandler* InputHandler::static_pInstance = 0;
 
 void InputHandler::update()
 {

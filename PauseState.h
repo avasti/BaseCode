@@ -7,6 +7,8 @@
 #ifndef PAUSESTATE_H
 #define PAUSESTATE_H
 
+typedef void(*Callback)();
+
 class PauseState : public GameState
 {
 public:
@@ -15,18 +17,15 @@ public:
 	bool onEnter();
 	bool onExit();
 	std::string getStateID() const;
+	void setCallbacks(const std::vector<Callback>& callbacks);
 private:
 	static const std::string s_menuID;
 	std::vector<GameObject*> m_gameObjects;
 	static void s_menuToPlay();
 	static void s_menuToMain();
-	MenuButton* mb;
-	MenuButton* mb2;
-	MenuButton* dummy;
-	StaticObjects* so;
-	StaticObjects* bg;
-	std::vector<int> theMiddle(int width, int height);
 	std::vector<int> m_position;
+	std::vector< Callback > m_callbacks;
+	std::vector<const char*> m_textureIDList;
 	int angle;
 };
 #endif PAUSESTATE_H

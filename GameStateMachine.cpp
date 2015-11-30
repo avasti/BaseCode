@@ -1,13 +1,13 @@
 #include "GameStateMachine.h"
 
-void GameStateMachine::pushState(GameState* pState) {
-	m_gameStates.push_back(pState);  
+void GameStateMachine::pushState(GameState* PlayState) {
+	m_gameStates.push_back(PlayState);  
 	m_gameStates.back()->onEnter();
 };
 
-void GameStateMachine::changeState(GameState* pState) {
+void GameStateMachine::changeState(GameState* PlayState) {
 	if (!m_gameStates.empty()) {
-		if (m_gameStates.back()->getStateID() == pState->getStateID()) {
+		if (m_gameStates.back()->getStateID() == PlayState->getStateID()) {
 			return;  
 		}
 		if (m_gameStates.back()->onExit()) {
@@ -16,7 +16,7 @@ void GameStateMachine::changeState(GameState* pState) {
 		}
 	}
 
-	m_gameStates.push_back(pState);
+	m_gameStates.push_back(PlayState);
 	m_gameStates.back()->onEnter(); 
 };
 

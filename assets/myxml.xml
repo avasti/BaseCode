@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<STATES>
+	<PLAYSTATE>
+		<TEXTURES>
+			<texture filename="Sonic.bmp" ID="Sonic" width="400" height="100" sizeX="40" sizeY="31"/>
+			<texture filename="Naruto.bmp" ID="Key" width="400" height="100" sizeX="18" sizeY="32"/>
+		</TEXTURES>
+		<OBJECTS>
+			<object type="Sonic" x="200" y="250" width="70" height="61" textureID="Sonic" numSprites="8" speedX="0" speedY="0" maxSpeed="30" friction="0.1" callbackId="0"/>
+			<object type="StaticObjects" x="400" y="300" width="36" height="64" textureID="Key" numSprites="8" speedX="0" speedY="0" maxSpeed="10" friction="0.1" callbackId="0"/>
+		</OBJECTS>
+	</PLAYSTATE>
+	<MENUSTATE>
+		<TEXTURES>
+			<texture filename="play.bmp" ID="playbtn" width="236" height="75" sizeX="236" sizeY="75"/>
+			<texture filename="salir.bmp" ID="exitbtn" width="236" height="75" sizeX="236" sizeY="75"/>
+		</TEXTURES>
+		<OBJECTS>
+			<object type="StaticObjects" x="236" y="75" width="375" height="75" textureID="titlemain" numSprites="1" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="0"/>
+			<object type="BotonMenu" x="236" y="275" width="236" height="75" textureID="playbtn" numSprites="3" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="1"/>
+			<object type="BotonMenu" x="236" y="375" width="236" height="75" textureID="exitbtn" numSprites="3" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="2"/>
+		</OBJECTS>
+	</MENUSTATE>
+	<PAUSESTATE>
+		<TEXTURES>
+			<texture filename="volver.bmp" ID="resumebtn" width="236" height="75" sizeX="236" sizeY="75"/>
+			<texture filename="main.bmp" ID="mainbtn" width="236" height="75" sizeX="236" sizeY="75"/>
+		</TEXTURES>
+		<OBJECTS>
+			<object type="StaticObjects" x="236" y="75" width="375" height="75" textureID="titlepause" numSprites="1" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="0"/>
+			<object type="BotonMenu" x="236" y="175" width="236" height="75" textureID="resumebtn" numSprites="3" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="1"/>
+			<object type="BotonMenu" x="236" y="275" width="236" height="76" textureID="mainbtn" numSprites="3" speedX="0" speedY="0" maxSpeed="0" friction="0" callbackId="2"/>
+		</OBJECTS>
+	</PAUSESTATE>
+</STATES>

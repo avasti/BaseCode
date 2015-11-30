@@ -1,5 +1,7 @@
 #include "MenuState.h"
 #include "Game.h"
+#include "TextureManager.h"
+#include "StateParser.h"
 
 void MenuState::update() {
 	for (int i = 0; i < m_gameObjects.size(); i++) {
@@ -14,37 +16,20 @@ void MenuState::render() {
 };
 
 bool MenuState::onEnter() {
-	so = new StaticObjects;
-	if (so == NULL) {
-		return false;
-	}
-	so->load(new LoaderParams(theMiddle(375, 75)[0], theMiddle(375, 75)[1] - 200, 375, 75, "titulo.bmp", 1, 0, 0, 0, 0));
-	if (!TextureManager::Instance()->load("titulo.bmp", "titulo.bmp", Game::Instance()->getRender())) {
-		return false;
-	}
-	TextureManager::Instance()->setSizeFrames("pausa.bmp", 250, 50);
-	m_gameObjects.push_back(so);
-	mb = new MenuButton(new LoaderParams(theMiddle(236, 75)[0], theMiddle(236, 75)[1] - 50, 236, 75, "play.bmp", 3, 0, 0, 0, 0), s_menuToPlay);
-	if (mb == NULL) {
-		return false;
-	}
-	m_gameObjects.push_back(mb);
-	mb2 = new MenuButton(new LoaderParams(theMiddle(236, 75)[0], theMiddle(236, 75)[1] + 50, 236, 75, "salir.bmp", 3, 0, 0, 0, 0), s_exitFromMenu);
-	if (mb2 == NULL) {
-		return false;
-	}
-	m_gameObjects.push_back(mb2);
+	StateParser::parseState("assets/myxml.xml", "MENUSTATE", &m_gameObjects, &m_textureIDList);
+	m_callbacks.push_back(0); 
+	m_callbacks.push_back(s_menuToPlay);
+	m_callbacks.push_back(s_exitFromMenu);
+	setCallbacks(m_callbacks);
 
 	return true;
 };
 
 bool MenuState::onExit() {
 	m_gameObjects.clear();
-	mb->clean();
-	mb2->clean();
-	so->clean();
-	TextureManager::Instance()->clean("play.bmp");
-	TextureManager::Instance()->clean("salir.bmp");
+	for (int i = 0; i < m_textureIDList.size(); i++) {
+		TextureManager::Instance()->clean(m_textureIDList[i]);
+	}
 	return true;
 };
 
@@ -65,10 +50,14 @@ void MenuState::s_exitFromMenu() {
 	Game::Instance()->setflag(false);
 }; 
 
-std::vector<int> MenuState::theMiddle(int width, int height) {
-	m_position = std::vector<int>(2, 0);
-	m_position[0] = (Game::Instance()->getScreenWidth() / 2) - width / 2;
-	m_position[1] = (Game::Instance()->getScreenHeight() / 2) - height / 2;
-
-	return m_position;
-};
+void MenuState::setCallbacks(const std::vector<Callback>& callbacks)
+{
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+		{
+			MenuButton* pButton = dynamic_cast< MenuButton* >(m_gameObjects[i]);
+			pButton->setCallback(callbacks[pButton->getCallbackID()]);
+		}
+	}
+}

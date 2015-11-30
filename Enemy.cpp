@@ -39,11 +39,7 @@ void Enemy::update() {
 	int pixelsToChangeFrame = 12;
 	m_position += m_velocity;
 	m_currentFrame = ((int)m_position.getX() / pixelsToChangeFrame) % m_spriteNum;
-};
-
-void Enemy::update(int width)
-{
-	if ((m_position.getX() < 0 && m_velocity.getX() < 0) || (m_position.getX() > (width - m_width) && m_velocity.getX() > 0)) {
+	if ((m_position.getX() < 0 && m_velocity.getX() < 0) || (m_position.getX() > (Game::Instance()->getScreenWidth() - m_width) && m_velocity.getX() > 0)) {
 		m_velocity *= -1;
 	}
 };

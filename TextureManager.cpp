@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 
-TextureManager* TextureManager::s_pInstance = 0;
+TextureManager* TextureManager::static_pInstance = 0;
 TextureManager::TextureManager() {};
 
 bool TextureManager::load(const char* fileName, const char* id, SDL_Renderer* pRenderer) {
@@ -8,6 +8,7 @@ bool TextureManager::load(const char* fileName, const char* id, SDL_Renderer* pR
 	SDL_SetColorKey(SDL_surface, 1, SDL_MapRGB(SDL_surface->format, 255, 0, 255));
 	SDL_texture = SDL_CreateTextureFromSurface(pRenderer, SDL_surface);
 	MAP_textureMap[*id] = SDL_texture;
+
 	return true;
 };
 
@@ -20,6 +21,7 @@ void TextureManager::draw(const char* id, int x, int y, int width, int height, i
 	TextureManager::dstrect.y = y;
 	TextureManager::dstrect.w = width;
 	TextureManager::dstrect.h = height;
+
 	SDL_RenderCopyEx(pRender, MAP_textureMap[*id], &srcrect, &dstrect, currentFrame, NULL, flip);
 };
 
@@ -32,6 +34,7 @@ void TextureManager::drawFrame(const char* id, int x, int y, int width, int heig
 	TextureManager::dstrect.y = y;
 	TextureManager::dstrect.w = width;
 	TextureManager::dstrect.h = height;
+
 	SDL_RenderCopyEx(pRender, MAP_textureMap[*id], &srcrect, &dstrect, 0, 0, flip);
 };
 
@@ -50,7 +53,8 @@ void TextureManager::clean(const char* id) {
 	SDL_surface = NULL;
 	SDL_texture = NULL;
 	MAP_textureMap.erase(*id);
-};
+}
+
 
 
 

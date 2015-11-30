@@ -12,6 +12,7 @@ public:
 	void load(const LoaderParams* pParams);
 	void update();
 	void update(int width);
+	static GameObject * Create() { return new Enemy(); }
 };
 
 #endif ENEMY_H
