@@ -1,30 +1,21 @@
 #pragma once
-#include "GameObject.h"
-#include "SDL.h"
-#ifndef PLAYER_H
-#define PLAYER_H
+#include "LivingEntity.h"
+#include <SDL.h>
+#include <vector>
 
-class Sonic : public GameObject
+class Player : public LivingEntity
 {
 private:
-	void stopX(int);
-	void stopY(int);
-	Vector2D m_lastStop;
-	SDL_RendererFlip m_lastTimeOrientation;
+	float salt;
 public:
-	Sonic();
-	~Sonic();
-	void draw();
-	void load(const LoaderParams* pParams);
-	void update();
-	void update(int width, int height);
-	void incrementAccelerationY();
-	void decrementAccelerationY();
-	void incrementAccelerationX();
-	void decrementAccelerationX();
-	void impulseRight();
-	void impulseLeft();
-	static GameObject * Create() { return new Sonic(); }
+	Player();
+	~Player();	
+	void Update();
+	void Jump();
+	bool InBounds(LivingEntity *);
+	void SetJump(float jump)
+	{
+		salt = jump;
+	}
+	static Entity * Create() { return new Player(); }
 };
-
-#endif PLAYER_H

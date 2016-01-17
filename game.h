@@ -1,55 +1,55 @@
 #pragma once
-#ifndef GAME_H
-#define GAME_H
-#include "SDL.h"
-#include "vector"
-#include "Player.h"
-#include "StaticObjects.h"
-#include "Enemy.h"
-#include "GameStateMachine.h"
-#include "PlayState.h"
-#include "MenuState.h"
-#include "GameObjectFactory.h"
+#include <iostream>
+#include <string>
+#include "Tools.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include "TextureManager.h"
+#include <ctime>
+#include <random>
+#include "StateManager.h"
+
+#define TheGame Game::GetInstance()
 
 class Game
 {
 private:
-	Game();
-	SDL_Window* g_pWindow;
-	SDL_Renderer* g_pRenderer;
-	SDL_Event event;
-	bool Tancar;
-	int SWidth;
-	int SHeight;
-	static Game* static_pInstance;
-	GameStateMachine* GameMachine;
-	GameState* PlayState;
-	GameState* MenuStates;
-	GameObjectFactory* TheGameObjectFactory;
-public:
-	static Game* Instance()
-	{
-		if (static_pInstance == 0)
-		{
-			static_pInstance = new Game();
-		}
-		return static_pInstance;
-	}
-	~Game();
-	
-	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-	void render();
-	void update();
-	void handleEvents();
-	void clean();
-	bool isRunning();
-	SDL_Renderer* getRender();
-	int getTicks();
-	std::vector<GameObject*> m_gobjects;
-	int getScreenWidth();
-	int getScreenHeight();
-	void setflag(bool b);
-	GameStateMachine* getGameStateMachine();
-};
+	SDL_Window * window;
+	SDL_Renderer * renderer;
 
-#endif
+	Game();
+
+	static Game * joc;
+	StateManager * manager;
+
+	int width, height;
+	bool Fullscreen;
+	bool Running;
+	bool takeScreenshot;
+	int r, g, b, a;
+public:
+	double delta;
+	void ToggleFullscreen();
+	void TakeScreenshot() { takeScreenshot = true; }
+	bool DEBUG = false;
+	static Game * GetInstance() 
+	{
+		if (joc == 0)
+		{
+			joc = new Game();
+		}
+		return joc;
+	};
+	~Game();
+	bool Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+	bool IsRunning();
+	void Clear();
+	void EventHandler();
+	void Update();
+	void Render();
+	void Close();
+
+	SDL_Renderer * GetRenderer() { return this->renderer; }
+	SDL_Window * GetWindow() { return this->window; }
+	StateManager * GetManager() { return this->manager; }
+};

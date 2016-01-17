@@ -1,35 +1,41 @@
 #pragma once
-#ifndef VECTOR2D_H
-#define VECTOR2D_H
+#include <iostream>
+#include <sstream>
+
+using namespace std;
 
 class Vector2D
 {
 public:
 	Vector2D();
-	Vector2D(float x, float y);
-	~Vector2D(void);
+	Vector2D(float, float);
+	~Vector2D();
 
-	float getX();
-	float getY();
-	void setX(float x);
-	void setY(float y);
+	float X;
+	float Y;
 
-	Vector2D operator+(const Vector2D& v) const;
-	Vector2D& operator+=(const Vector2D& v);
-	Vector2D operator*(float scalar) const;
-	Vector2D& operator*=(float scalar);
-	Vector2D operator-(const Vector2D& v) const;
-	Vector2D& operator-=(const Vector2D& v);
-	Vector2D operator/(float scalar);
-	Vector2D& operator/=(float scalar);
-	Vector2D& operator=(const Vector2D& v);
-	float length();
-	Vector2D normalize();
+	Vector2D operator+(const Vector2D&) const;
+	Vector2D& operator+=(const Vector2D&);
 
-private:
-	float m_x;
-	float m_y;
+	Vector2D operator-() const;
+	Vector2D operator-(const Vector2D&) const;
+	Vector2D& operator-=(const Vector2D&);
+
+	Vector2D operator*(float);
+	Vector2D operator*(const Vector2D&) const;
+	Vector2D& operator*=(float);
+	Vector2D& operator*=(const Vector2D&);
+
+	Vector2D operator/(float);
+	Vector2D& operator/=(float);
+
+	float lenght();
+	void normalize();
+
+	std::string toString() {
+		stringstream ss;
+		ss << "[Vector2D: X: " << X << ", Y:" << Y << "]";
+		return ss.str();
+	}
 };
-
-#endif VECTOR2D_H
 

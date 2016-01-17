@@ -1,18 +1,28 @@
 #pragma once
-#include "GameObject.h"
-#ifndef ENEMY_H
-#define ENEMY_H
+#include "LivingEntity.h"
+#include "Player.h"
+#include <time.h>
+#include "Vector2D.h"
 
-class Enemy : public GameObject
+#define STATIC_ENEMY 0
+#define FOLLOWER_ENEMY 1
+#define IGNORE_ENEMY 2
+#define LITTLE_MOVEMENT 3
+
+class Enemy :
+	public LivingEntity
 {
+private:
+	int type = 0;
+	void FollowPlayer(Player *);
+	void BeStatic(Player *);
+	void TheIgnored();
+	void MoveALittle();
+	Vector2D playerPos;
 public:
-	Enemy();
+	Enemy(int);
 	~Enemy();
-	void draw();
-	void load(const LoaderParams* pParams);
-	void update();
-	void update(int width);
-	static GameObject * Create() { return new Enemy(); }
+	void Update(Player *);
+	static Entity * Create() { return new Enemy(STATIC_ENEMY); }
+	void SetType(int type) { this->type = type; }
 };
-
-#endif ENEMY_H

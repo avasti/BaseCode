@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<state>
+	<textures>
+		<texture file="start.png" ID="startButton"/>
+		<texture file="exit.png" ID="exitButton"/>
+	</textures>
+	<objects>
+		<object type="Button" x="100" y="100" width="400" height = "150" row = "0" texture="startButton" numFrames="0" callback="1"/>
+		<object type="Button" x="100" y="300" width="400" height = "150" row = "0" texture="exitButton" numFrames="0" callback="2"/>
+	</objects>
+</state>

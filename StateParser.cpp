@@ -1,113 +1,79 @@
 #include "StateParser.h"
-#include "GameObjectFactory.h"
 #include "TextureManager.h"
-#include "Game.h"
-#include <string>
+#include "EntityFactory.h"
+#include "AllEntities.hpp"
 
-bool StateParser::parseState(const char * stateFile, std::string stateID, std::vector<GameObject*>* pObjects, std::vector<const char *>* pTextureIDs)
+void StateParser::parseObjects(XMLElement * stateRoot, vector<Entity*>* entities)
 {
-		TiXmlDocument xmlDoc;
-		if (!xmlDoc.LoadFile(stateFile)) {
-			printf(">>>>%s\n", xmlDoc.ErrorDesc());
-			return false;
-		}
-		TiXmlElement* pRoot = xmlDoc.RootElement();
-		TiXmlElement* pStateRoot = 0;
+	string type = stateRoot->Attribute("type");
+	string id = stateRoot->Attribute("texture");
 
-		for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-		{
-			if (e->Value() == stateID)
-			{
-				pStateRoot = e;
-			}
-		}
+	int x = atoi(stateRoot->Attribute("x"));
+	int y = atoi(stateRoot->Attribute("y"));
+	int width = atoi(stateRoot->Attribute("width"));
+	int height = atoi(stateRoot->Attribute("height"));
+	int numFrames = atoi(stateRoot->Attribute("numFrames"));
+	int row = atoi(stateRoot->Attribute("row"));
 
-		TiXmlElement* pTextureRoot = 0;
-		for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-		{
-			if (e->Value() == std::string("TEXTURES"))
-			{
-				pTextureRoot = e;
-			}
-		}
-		parseTextures(pTextureRoot, pTextureIDs);
-
-		TiXmlElement* pObjectRoot = 0;
-
-		for (TiXmlElement* e = pStateRoot->FirstChildElement(); e !=
-			NULL; e = e->NextSiblingElement())
-		{
-			if (e->Value() == std::string("OBJECTS"))
-			{
-				pObjectRoot = e;
-			}
-		}
-		parseObjects(pObjectRoot, pObjects);
-
-		return true;
-}
-
-
-void StateParser::parseObjects(TiXmlElement * pStateRoot, std::vector<GameObject*> *pObjects)
-{
-	int i = 100;
-	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()) {
-		int x, y, width, height, numSprites, callbackId;
-		double speedX, speedY, maxSpeed, friction;
-
-		e->Attribute("x", &x);
-		e->Attribute("y", &y);
-		e->Attribute("width", &width);
-		e->Attribute("height", &height);
-		const size_t len = strlen(e->Attribute("textureID"));
-		char * textureID = new char[len + 1];
-		strncpy(textureID, e->Attribute("textureID"), len);
-		textureID[len] = '\0';
-		e->Attribute("numSprites", &numSprites);
-		e->Attribute("speedX", &speedX);	
-		e->Attribute("speedY", &speedY);
-		e->Attribute("maxSpeed", &maxSpeed);
-		e->Attribute("friction", &friction);
-		e->Attribute("callbackId", &callbackId);
-		
-		GameObject* go = GameObjectFactory::Instance()->CreateGameObject(e->Attribute("type"));
-		if (strcmp(e->Attribute("type"), "BotonMenu") == 0 || strcmp(e->Attribute("type"), "StaticObjects") == 0 ) {
-			go->load(new LoaderParams(theMiddle(width, height)[0], theMiddle(width, height)[1] -200 + i, width, height, textureID, numSprites, speedX, speedY, maxSpeed, friction, callbackId));
-			i += 100;
-		}
-		else {
-			go->load(new LoaderParams(x, y, width, height, textureID, numSprites, speedX, speedY, maxSpeed, friction, callbackId));
-		}
-		pObjects->push_back(go);
+	Entity * ent = EntityCreator->CreateEntity(type);
+	if (dynamic_cast<Button *>(ent))
+	{
+		int callback = atoi(stateRoot->Attribute("callback"));
+		x = (Tools::GetWidth() / 2) - (width / 2);
+		if (callback != 0)
+			dynamic_cast<Button *>(ent)->CallbackID = callback;
 	}
-}
 
-void StateParser::parseTextures(TiXmlElement * pStateRoot, std::vector<const char*>* pTextureIDs)
-{
-	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement()) {
-		const char* filename, *ID;
-		int width, height, sizeX, sizeY;
-
-		filename = e->Attribute("filename");
-		ID = e->Attribute("ID");
-		width = atoi(e->Attribute("width"));
-		height = atoi(e->Attribute("height"));
-		sizeX = atoi(e->Attribute("sizeX"));
-		sizeY = atoi(e->Attribute("sizeY"));
-
-		TextureManager::Instance()->load(filename, ID, Game::Instance()->getRender());
-		TextureManager::Instance()->setSizeFrames(ID, sizeX, sizeY);
-
-		pTextureIDs->push_back(ID);
+	if (Enemy * enemy = dynamic_cast<Enemy *>(ent))
+	{
+		int enemyType = atoi(stateRoot->Attribute("enemy"));
+		enemy->SetType(enemyType);
 	}
+	if (Player * pl = dynamic_cast<Player *>(ent))
+	{
+		float jump = (float)atof(stateRoot->Attribute("jump"));
+		pl->SetJump(jump);
+	}
+	EntityParams * params = new EntityParams(id.c_str(), x, y, width, height, numFrames, row);
+	ent->Load(params);
+	entities->push_back(ent);
 }
 
-std::vector<int> StateParser::theMiddle(int width, int height) {
-	std::vector<int> m_position = std::vector<int>(2, 0);
-	m_position[0] = (Game::Instance()->getScreenWidth() / 2) - width / 2;
-	m_position[1] = (Game::Instance()->getScreenHeight() / 2) - height / 2;
+void StateParser::parseTextures(XMLElement * stateRoot, vector<string>* textures)
+{
+	string file = stateRoot->Attribute("file");
+	string id = stateRoot->Attribute("ID");
+	Manager->Load(file.c_str(), id.c_str());
+	textures->push_back(id);
+}
 
-	return m_position;
-};
+bool StateParser::ParseState(const char * stateFile, string stateID, vector<Entity*>* entitats, vector<string>* textures)
+{
+	XMLDocument doc;
+	string path = PATH;
+	path.append(stateFile);
+	
+	doc.LoadFile(path.c_str());
+	
+	if (doc.Error())
+	{
+		cout << doc.ErrorName() << endl;
+		return false;
+	}
 
+	XMLElement * state = doc.FirstChildElement("state");
+	XMLElement * tex = state->FirstChildElement("textures");
+	for (auto e = tex->FirstChildElement("texture"); 
+	e != NULL; e = e->NextSiblingElement("texture"))
+	{
+		parseTextures(e, textures);
+	}
 
+	XMLElement * obj = state->FirstChildElement("objects");
+	for (auto e = obj->FirstChildElement("object");
+	e != NULL; e = e->NextSiblingElement("object"))
+	{
+		parseObjects(e, entitats);
+	}
+	return true;
+}

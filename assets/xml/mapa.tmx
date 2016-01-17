@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="90" height="90" tilewidth="32" tileheight="32" nextobjectid="6">
+ <tileset firstgid="1" name="obj" tilewidth="32" tileheight="32">
+  <image source="../img/obj.png" width="224" height="32"/>
+ </tileset>
+ <tileset firstgid="8" name="Player" tilewidth="32" tileheight="32">
+  <image source="../img/sonic.png" width="320" height="96"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJzt0osKgzAMBVDbPfz/Px6DCaVEbIpjA8+B0CK2XhKXBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAK7r/OsAFlKZmtDN67DzPuk1+81+VoLKeA/uM2tSsurN/y+aNsmxzHplx1OORXmdnknm/BjWaua/1U7P/UAmybHfUbo3uz2Q9Ojea9+hc1N+o35nsZ+bt74jWb9YZuTP1AnjxARA=
+  </data>
+ </layer>
+ <objectgroup name="Capa de Objetos 1">
+  <object id="5" name="Player" type="Player" gid="8" x="129" y="2819" width="32" height="32"/>
+ </objectgroup>
+</map>
