@@ -14,7 +14,7 @@
     <ProjectGuid>{C91B3F34-BD85-445F-B9DA-DD295832BC64}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>version1</RootNamespace>
-    <ProjectName>1-helloworld</ProjectName>
+    <ProjectName>Sonic Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,12 +41,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <IncludePath>../libs/SDL/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -54,13 +51,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>libs/SDL/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>libs\zlib\include;libs\SDL\include;libs\TinyXML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>libs/SDL/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>libs\zlib\lib;libs\SDL\lib;libs\TinyXML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;tinyxml2.lib;zdll.lib;SDL2_mixer.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,16 +69,71 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>libs\SDL\include;libs\TinyXML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>libs\SDL\lib;libs\TinyXML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;tinyxml2.lib;SDL2_mixer.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="EntityParams.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameStates.cpp" />
+    <ClCompile Include="InertEntity.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelParser.cpp" />
+    <ClCompile Include="libs\base64\base64.cpp" />
+    <ClCompile Include="LivingEntity.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ObjectLayer.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="StateParser.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
+    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AllEntities.hpp" />
+    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="EntityParams.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameStates.h" />
+    <ClInclude Include="InertEntity.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="LevelParser.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="libs\base64\base64.h" />
+    <ClInclude Include="LivingEntity.h" />
+    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="ObjectLayer.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="StateParser.h" />
+    <ClInclude Include="TileLayer.h" />
+    <ClInclude Include="Tileset.h" />
+    <ClInclude Include="Tools.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

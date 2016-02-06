@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="90" height="90" tilewidth="32" tileheight="32" nextobjectid="38">
+ <tileset firstgid="1" name="obj" tilewidth="32" tileheight="32">
+  <image source="../img/obj.png" width="224" height="32"/>
+ </tileset>
+ <tileset firstgid="8" name="Player" tilewidth="32" tileheight="32">
+  <image source="../img/sonic.png" width="320" height="96"/>
+ </tileset>
+ <tileset firstgid="38" name="enemy" tilewidth="32" tileheight="32">
+  <image source="../img/enemy.png" width="320" height="96"/>
+ </tileset>
+ <layer name="Collision" width="90" height="90">
+  <properties>
+   <property name="HasCollision" value="1"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0MsKhDAQBECjsP//ycveRFp3NL4OVdAQgnGaGQYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAKbZa3mJ4ucLIW8rRxlp5/pPPPp3BOfY5KO67sOn1X6VsxhqzN/petvhUtdFnOWN71dl17t6fz1ru037TvPd2P9u2dcUXu7v0FY+YA2g==
+  </data>
+ </layer>
+ <objectgroup name="objectes">
+  <object id="5" name="Player" type="Player" gid="8" x="107" y="2672" width="32" height="32">
+   <properties>
+    <property name="CollisionMargin" value="10"/>
+   </properties>
+  </object>
+  <object id="10" name="Enemy" type="Enemy" gid="38" x="1313" y="2430" width="32" height="32">
+   <properties>
+    <property name="CollisionMargin" value="0"/>
+    <property name="Type" value="2"/>
+   </properties>
+  </object>
+  <object id="36" name="Enemy" type="Enemy" gid="38" x="336" y="2726" width="32" height="32">
+   <properties>
+    <property name="CollisionMargin" value="0"/>
+    <property name="Type" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="BG" width="90" height="90" opacity="0.97">
+  <properties>
+   <property name="HasCollision" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeDR+kAAB
+  </data>
+ </layer>
+</map>
